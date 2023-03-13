@@ -1,13 +1,16 @@
 spring:
   datasource:
     url: jdbc:mysql://localhost:3306/classmate
-    username: root
-    password: 1234
+    username: ${MYSQL-USERNAME}
+    password: ${MYSQL-PASSWORD}
     driver-class-name: com.mysql.cj.jdbc.Driver
 
   jpa:
     hibernate:
       ddl-auto: create
+
+  profiles:
+    include: API-KEY
 
 logging.level:
   org.hibernate.SQL: debug
