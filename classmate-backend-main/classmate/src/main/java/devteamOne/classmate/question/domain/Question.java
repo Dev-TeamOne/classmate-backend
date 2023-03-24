@@ -16,8 +16,6 @@ public class Question {
 
   private Boolean answered;
 
-  private Boolean pinned;
-
   private LocalDateTime createdAt;
 
   @ManyToOne(fetch = FetchType.LAZY)
