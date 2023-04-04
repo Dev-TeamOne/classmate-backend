@@ -5,33 +5,51 @@ import devteamOne.classmate.question.domain.Question;
 import devteamOne.classmate.survey.domain.Survey;
 import devteamOne.classmate.user.domain.User;
 import jakarta.persistence.*;
+import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import org.springframework.data.annotation.CreatedDate;
+
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
 @Entity
+@Getter
+@Builder
+@AllArgsConstructor(access = AccessLevel.PRIVATE)
+@NoArgsConstructor
 public class Channel {
 
-  @Id
-  @GeneratedValue(strategy = GenerationType.IDENTITY)
-  private Long id;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
-  private String name;
+    private String name;
 
-  private String code;
+    private String code;
 
-  private LocalDateTime createdAt;
+    private LocalDateTime startDate;
 
-  @ManyToOne(fetch = FetchType.LAZY)
-  @JoinColumn(name = "user_id")
-  private User user;
+    private LocalDateTime endDate;
 
-  @OneToMany(mappedBy = "channel")
-  private List<Question> questionList = new ArrayList<>();
+    private Integer maxPersonnel;
 
-  @OneToMany(mappedBy = "channel")
-  private List<Survey> surveyList = new ArrayList<>();
+    @CreatedDate
+    private LocalDateTime createdAt;
 
-  @OneToMany(mappedBy = "channel")
-  private List<Participant> participantList = new ArrayList<>();
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id")
+    private User user;
+
+    @OneToMany(mappedBy = "channel")
+    private List<Question> questionList = new ArrayList<>();
+
+    @OneToMany(mappedBy = "channel")
+    private List<Survey> surveyList = new ArrayList<>();
+
+    @OneToMany(mappedBy = "channel")
+    private List<Participant> participantList = new ArrayList<>();
 }
