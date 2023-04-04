@@ -3,15 +3,15 @@ package devteamOne.classmate.global.response;
 import org.springframework.http.HttpStatus;
 
 public class BasicResponse {
-    private HttpStatus status;
+    private String status;
     private String message;
 
-    private BasicResponse(HttpStatus status, String message) {
+    private BasicResponse(String status, String message) {
         this.status = status;
         this.message = message;
     }
 
-    public static BasicResponse from(HttpStatus status, String message) {
+    public static BasicResponse from(String status, String message) {
         return new BasicResponse(status, message);
     }
 }
