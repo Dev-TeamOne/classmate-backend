@@ -1,5 +1,6 @@
 package devteamOne.classmate.channel.domain;
 
+import devteamOne.classmate.global.domain.BaseTimeEntity;
 import devteamOne.classmate.participant.domain.Participant;
 import devteamOne.classmate.question.domain.Question;
 import devteamOne.classmate.survey.domain.Survey;
@@ -10,7 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-public class Channel {
+public class Channel extends BaseTimeEntity {
 
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -19,8 +20,6 @@ public class Channel {
   private String name;
 
   private String code;
-
-  private LocalDateTime createdAt;
 
   @ManyToOne(fetch = FetchType.LAZY)
   @JoinColumn(name = "user_id")
