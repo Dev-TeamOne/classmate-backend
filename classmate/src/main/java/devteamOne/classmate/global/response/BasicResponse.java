@@ -1,7 +1,8 @@
 package devteamOne.classmate.global.response;
 
-import org.springframework.http.HttpStatus;
+import lombok.Getter;
 
+@Getter
 public class BasicResponse {
     private String status;
     private String message;

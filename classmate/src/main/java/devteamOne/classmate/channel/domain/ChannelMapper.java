@@ -1,6 +1,7 @@
 package devteamOne.classmate.channel.domain;
 
 import devteamOne.classmate.channel.domain.dto.ChannelCreateRequest;
+import devteamOne.classmate.channel.domain.dto.ChannelDto;
 import org.mapstruct.Mapper;
 import org.mapstruct.ReportingPolicy;
 import org.mapstruct.factory.Mappers;
@@ -11,4 +12,6 @@ public interface ChannelMapper {
     ChannelMapper INSTANCE = Mappers.getMapper(ChannelMapper.class);
 
     Channel createDtoToEntity(ChannelCreateRequest request);
+
+    ChannelDto entityToDto(Channel channel);
 }

@@ -15,6 +15,7 @@ import org.springframework.data.annotation.CreatedDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 @Entity
 @Getter
@@ -52,4 +53,10 @@ public class Channel {
 
     @OneToMany(mappedBy = "channel")
     private List<Participant> participantList = new ArrayList<>();
+
+    public void assignCreator(User user) {
+        this.user = user;
+        this.code = UUID.randomUUID().toString();
+        this.createdAt = LocalDateTime.now();
+    }
 }
