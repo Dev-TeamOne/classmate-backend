@@ -1,5 +1,6 @@
 package devteamOne.classmate.channel.domain;
 
+import devteamOne.classmate.global.domain.BaseTimeEntity;
 import devteamOne.classmate.participant.domain.Participant;
 import devteamOne.classmate.question.domain.Question;
 import devteamOne.classmate.survey.domain.Survey;

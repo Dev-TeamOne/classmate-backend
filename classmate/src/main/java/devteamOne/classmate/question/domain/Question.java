@@ -1,12 +1,13 @@
 package devteamOne.classmate.question.domain;
 
 import devteamOne.classmate.channel.domain.Channel;
+import devteamOne.classmate.global.domain.BaseTimeEntity;
 import devteamOne.classmate.user.domain.User;
 import jakarta.persistence.*;
 import java.time.LocalDateTime;
 
 @Entity
-public class Question {
+public class Question extends BaseTimeEntity {
 
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -15,8 +16,6 @@ public class Question {
   private String context;
 
   private Boolean answered;
-
-  private LocalDateTime createdAt;
 
   @ManyToOne(fetch = FetchType.LAZY)
   @JoinColumn(name = "user_id")
