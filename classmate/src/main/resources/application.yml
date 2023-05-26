@@ -10,7 +10,9 @@ spring:
       ddl-auto: create
 
   profiles:
-    include: API-KEY
+    include:
+      - API-KEY
+      - jwt
 
 logging.level:
   org.hibernate.SQL: debug
