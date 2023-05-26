@@ -14,9 +14,4 @@ public class ClassmateApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(ClassmateApplication.class, args);
 	}
-
-	@Bean
-	public PasswordEncoder passwordEncoder() {
-		return new BCryptPasswordEncoder();
-	}
 }

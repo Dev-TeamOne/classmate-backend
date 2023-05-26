@@ -1,5 +1,6 @@
 package devteamOne.classmate.user.service;
 
+import devteamOne.classmate.user.domain.Role;
 import devteamOne.classmate.user.domain.User;
 import devteamOne.classmate.user.domain.dto.UserSignUpDto;
 import devteamOne.classmate.user.exception.UserAlreadyExistException;
@@ -27,6 +28,7 @@ public class UserService {
                 .email(userSignUpDto.getEmail())
                 .nickname(userSignUpDto.getNickname())
                 .password(passwordEncoder.encode(userSignUpDto.getPassword()))
+                .role(Role.USER)
                 .build();
 
         userRepository.save(user);
