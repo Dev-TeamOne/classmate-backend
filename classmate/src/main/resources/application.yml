@@ -13,6 +13,7 @@ spring:
     include:
       - API-KEY
       - jwt
+      - oauth
 
 logging.level:
   org.hibernate.SQL: debug

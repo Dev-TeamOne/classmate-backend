@@ -1,3 +1,7 @@
+profiles:
+  include:
+    - API-KEY
+
 spring:
   security:
     oauth2:
@@ -7,7 +11,3 @@ spring:
             client-id: ${GOOGLE-OAUTH-CLIENT-ID}
             client-secret: ${GOOGLE-OAUTH-SECRET}
             scope: profile, email
-
-  profiles:
-    include:
-      - API-KEY

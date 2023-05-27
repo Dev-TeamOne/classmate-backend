@@ -7,6 +7,9 @@ import devteamOne.classmate.global.login.filter.CustomJsonAuthenticationFilter;
 import devteamOne.classmate.global.login.handler.LoginFailureHandler;
 import devteamOne.classmate.global.login.handler.LoginSuccessHandler;
 import devteamOne.classmate.global.login.service.LoginService;
+import devteamOne.classmate.global.oauth.handler.OAuth2LoginFailureHandler;
+import devteamOne.classmate.global.oauth.handler.OAuth2LoginSuccessHandler;
+import devteamOne.classmate.global.oauth.service.CustomOAuth2UserService;
 import devteamOne.classmate.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
@@ -32,6 +35,9 @@ public class SecurityConfig {
     private final LoginService loginService;
     private final JwtService jwtService;
 
+    private final OAuth2LoginSuccessHandler oAuth2LoginSuccessHandler;
+    private final OAuth2LoginFailureHandler oAuth2LoginFailureHandler;
+    private final CustomOAuth2UserService customOAuth2UserService;
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
@@ -47,7 +53,13 @@ public class SecurityConfig {
 
                 .authorizeRequests()
                 .requestMatchers("/sign-up").permitAll()
-                .anyRequest().authenticated();
+                .anyRequest().authenticated()
+
+                .and()
+                .oauth2Login()
+                .successHandler(oAuth2LoginSuccessHandler)
+                .failureHandler(oAuth2LoginFailureHandler)
+                .userInfoEndpoint().userService(customOAuth2UserService);
 
         http.addFilterAfter(customJsonAuthenticationFilter(), LogoutFilter.class);
         http.addFilterBefore(jwtAuthenticationProcessingFilter(), CustomJsonAuthenticationFilter.class);
