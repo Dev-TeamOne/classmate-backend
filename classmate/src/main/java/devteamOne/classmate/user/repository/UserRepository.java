@@ -1,5 +1,6 @@
 package devteamOne.classmate.user.repository;
 
+import devteamOne.classmate.user.domain.SocialType;
 import devteamOne.classmate.user.domain.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 
@@ -10,5 +11,5 @@ public interface UserRepository extends JpaRepository<User, Long> {
     Optional<User> findByEmail(String email);
     Optional<User> findByNickname(String nickname);
     Optional<User> findByRefreshToken(String refreshToken);
-    Optional<User> findBySocialTypeAndSocialId(String socialType, String socialId);
+    Optional<User> findBySocialTypeAndSocialId(SocialType socialType, String socialId);
 }
