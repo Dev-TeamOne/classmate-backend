@@ -5,6 +5,7 @@ import devteamOne.classmate.user.domain.dto.UserSignUpDto;
 import devteamOne.classmate.user.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -23,5 +24,10 @@ public class UserController {
         return ResponseEntity.ok(
                 BasicResponse.from("S-00", "회원 가입 성공")
         );
+    }
+
+    @GetMapping("/jwt-test")
+    public String jwtTest() {
+        return "jwtTest 요청 성공";
     }
 }
