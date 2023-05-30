@@ -5,6 +5,7 @@ import com.auth0.jwt.algorithms.Algorithm;
 import devteamOne.classmate.user.repository.UserRepository;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.transaction.Transactional;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -126,6 +127,7 @@ public class JwtService {
     /**
      * RefreshToken DB 업데이트
      */
+    @Transactional
     public void updateRefreshToken(String email, String refreshToken) {
         userRepository.findByEmail(email)
                 .ifPresentOrElse(
