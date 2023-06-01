@@ -28,19 +28,19 @@ public class ChannelController {
     @GetMapping("/channels")
     public ResponseEntity<DataResponse<List<ChannelDto>>> getChannels(@RequestParam ChannelType type, Principal principal) {
 
-//        String socialId = principal.getName();
+        String email = principal.getName();
 
         return ResponseEntity.ok(
-                DataResponse.from("S-00", "채널 조회 성공", channelService.getChannels("socialId", type))
+                DataResponse.from("S-00", "채널 조회 성공", channelService.getChannels(email, type))
         );
     }
 
 
     @PostMapping("/channels")
     public ResponseEntity<BasicResponse> create(@RequestBody ChannelCreateRequest request, Principal principal) {
-        // get User
-//        String socialId = principal.getName();
-        channelService.save("socialId", request);
+
+        String email = principal.getName();
+        channelService.save(email, request);
 
         return ResponseEntity.ok(
                 BasicResponse.from("S-00", "채널 생성 성공")
@@ -48,9 +48,10 @@ public class ChannelController {
     }
 
     @DeleteMapping("/channels/{channel_id}")
-    public ResponseEntity<BasicResponse> delete(@PathVariable("channel_id") Long id) {
+    public ResponseEntity<BasicResponse> delete(@PathVariable("channel_id") Long id, Principal principal) {
 
-        channelService.delete(id);
+        String email = principal.getName();
+        channelService.delete(email, id);
 
         return ResponseEntity.ok(
                 BasicResponse.from("S-00", "채널 삭제 성공")

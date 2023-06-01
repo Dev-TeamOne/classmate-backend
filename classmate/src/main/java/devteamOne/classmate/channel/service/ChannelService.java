@@ -9,6 +9,7 @@ import devteamOne.classmate.channel.exception.ChannelNotFoundException;
 import devteamOne.classmate.channel.repository.ChannelRepository;
 import devteamOne.classmate.participant.repository.ParticipantRepository;
 import devteamOne.classmate.user.domain.User;
+import devteamOne.classmate.user.exception.UserHasNotPermission;
 import devteamOne.classmate.user.exception.UserNotFoundException;
 import devteamOne.classmate.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
@@ -27,10 +28,9 @@ public class ChannelService {
     private final ParticipantRepository participantRepository;
 
     @Transactional(readOnly = true)
-    public List<ChannelDto> getChannels(String socialId, ChannelType type) {
+    public List<ChannelDto> getChannels(String email, ChannelType type) {
 
-        // userService.findBySocialId(socialId);
-        User user = userRepository.findById(1L).orElseThrow(UserNotFoundException::new);
+        User user = userRepository.findByEmail(email).orElseThrow(UserNotFoundException::new);
 
         if (type.equals(ChannelType.ME)) {
             return channelRepository.findAllByUser(user).stream()
@@ -45,9 +45,9 @@ public class ChannelService {
         throw new IllegalStateException();
     }
 
-    public void save(String socialId, ChannelCreateRequest request) {
-        // userService.findBySocialId(socialId);
-        User user = userRepository.findById(1L).orElseThrow(UserNotFoundException::new);
+    public void save(String email, ChannelCreateRequest request) {
+
+        User user = userRepository.findByEmail(email).orElseThrow(UserNotFoundException::new);
 
         Channel channel = ChannelMapper.INSTANCE.createDtoToEntity(request);
         channel.assignCreator(user);
@@ -55,8 +55,13 @@ public class ChannelService {
         channelRepository.save(channel);
     }
 
-    public void delete(Long id) {
+    public void delete(String email, Long id) {
+
         Channel channel = channelRepository.findById(id).orElseThrow(ChannelNotFoundException::new);
+
+        if (!channel.getUser().getEmail().equals(email)) {
+            throw new UserHasNotPermission();
+        }
 
         // User 권한 체크
         channelRepository.delete(channel);
