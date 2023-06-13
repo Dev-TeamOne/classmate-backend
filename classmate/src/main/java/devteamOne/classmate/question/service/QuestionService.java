@@ -69,4 +69,21 @@ public class QuestionService {
         // question 저장
         questionRepository.save(question);
     }
+
+    public void delete(Long question_id) {
+
+        // question 조회
+        Question question = questionRepository.findById(question_id)
+            .orElseThrow(QuestionNotFoundException::new);
+
+        // 본인 확인
+        User user = userRepository.findById(1L).orElseThrow();
+        Boolean identification = question.checkUser(user);
+        if (!identification) {
+            throw new QuestionIdentificationException();
+        }
+
+        // question 삭제
+        questionRepository.delete(question);
+    }
 }

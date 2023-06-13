@@ -5,6 +5,7 @@ import devteamOne.classmate.question.domain.dto.QuestionRequest;
 import devteamOne.classmate.question.service.QuestionService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -34,6 +35,16 @@ public class QuestionController {
 
         return ResponseEntity.ok(
             BasicResponse.from("200", "질문 수정 성공")
+        );
+    }
+
+    @DeleteMapping("/question/{question_id}")
+    public ResponseEntity<BasicResponse> delete(@PathVariable("question_id") Long questionId) {
+
+        questionService.delete(questionId);
+
+        return ResponseEntity.ok(
+            BasicResponse.from("200", "질문 삭제 성공")
         );
     }
 }
