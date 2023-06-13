@@ -8,6 +8,8 @@ import devteamOne.classmate.participant.repository.ParticipantRepository;
 import devteamOne.classmate.question.domain.Question;
 import devteamOne.classmate.question.domain.QuestionMapper;
 import devteamOne.classmate.question.domain.dto.QuestionRequest;
+import devteamOne.classmate.question.exception.QuestionIdentificationException;
+import devteamOne.classmate.question.exception.QuestionNotFoundException;
 import devteamOne.classmate.question.repository.QuestionRepository;
 import devteamOne.classmate.user.domain.User;
 import devteamOne.classmate.user.exception.UserNotFoundException;
@@ -43,6 +45,26 @@ public class QuestionService {
         // question 생성
         Question question = QuestionMapper.INSTANCE.createDtoToEntity(questionRequest);
         question.assignCreator(user, channel);
+
+        // question 저장
+        questionRepository.save(question);
+    }
+
+    public void modifyQuestion(Long questionId, QuestionRequest questionRequest) {
+
+        // question 조회
+        Question question = questionRepository.findById(questionId)
+            .orElseThrow(QuestionNotFoundException::new);
+
+        // 본인 확인
+        User user = userRepository.findById(1L).orElseThrow();
+        Boolean identification = question.checkUser(user);
+        if (!identification) {
+            throw new QuestionIdentificationException();
+        }
+
+        // question 수정
+        question.modifyContent(questionRequest.getContent());
 
         // question 저장
         questionRepository.save(question);
